@@ -22,7 +22,7 @@ Navigation links to all other pages on the site.
 
     <header>
         <div class="logo-container">
-            <img src="SugarGlidersLogo.png" alt="SugarGliders Logo" class="logo">
+            <img src="images/SugarGlidersLogo.png" alt="SugarGliders Logo" class="logo">
             <h1>SugarGliders</h1>
         </div>
 
