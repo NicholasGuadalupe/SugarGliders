@@ -69,7 +69,7 @@ Matches the existing SugarGliders Studio design.
 
             <div class="team-card">
                 <div class="avatar">
-                    <img src="images/SugarGlidersLogo.png" alt="SugarGliders Logo" class="logo">
+                    <img src="images/SugarGlidersLogo.png" alt="SugarGliders Logo" class="avatar-img">
                 </div>
                 <h3 class="member-name">Cameron Hugg</h3>
                 <p class="member-role">Something</p>
@@ -80,7 +80,7 @@ Matches the existing SugarGliders Studio design.
 
             <div class="team-card">
                 <div class="avatar">
-                    <img src="images/SugarGlidersLogo.png" alt="SugarGliders Logo" class="logo">
+                    <img src="images/SugarGlidersLogo.png" alt="SugarGliders Logo" class="avatar-img">
                 </div>
                 <h3 class="member-name">Carter Hickerson</h3>
                 <p class="member-role">Something</p>
