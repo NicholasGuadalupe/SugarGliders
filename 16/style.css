@@ -112,3 +112,121 @@ footer {
     color: #F6F7EB;
     margin-top: 40px;
 }
+/* About / Meet the Team page styles*/
+nav a.active {
+    color: #FFFD98;
+    border-bottom: 2px solid #59C9A5;
+    padding-bottom: 2px;
+}
+
+/* ── Group banner ────────────────────────────────────── */
+.about-group {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background-color: #233952;
+    color: #F6F7EB;
+}
+
+.about-group h2 {
+    font-size: 2.4em;
+    color: #59C9A5;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+
+.about-group p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: #B9E3C6;
+    font-size: 1.05em;
+    line-height: 1.7;
+}
+
+/* ── Team grid ──────────────────────────────────────── */
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 30px;
+    background-color: #F6F7EB;
+}
+
+/* ── Individual card ────────────────────────────────── */
+.team-card {
+    background-color: #ffffff;
+    border: 2px solid #B9E3C6;
+    border-radius: 14px;
+    padding: 36px 28px 30px;
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(35, 57, 82, 0.10);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 28px rgba(35, 57, 82, 0.18);
+}
+
+/* ── Avatar circle ──────────────────────────────────── */
+.avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background-color: #233952;
+    border: 3px solid #59C9A5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 22px auto;
+}
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.avatar-icon {
+    font-size: 2em;
+    color: #FFFD98;
+    line-height: 1;
+}
+
+/* ── Member name ────────────────────────────────────── */
+.member-name {
+    font-size: 1.2em;
+    color: #D81E5B;
+    margin-bottom: 6px;
+}
+
+/* ── Role badge ─────────────────────────────────────── */
+.member-role {
+    font-size: 0.88em;
+    font-weight: bold;
+    color: #59C9A5;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+}
+
+/* ── Bio text ───────────────────────────────────────── */
+.member-bio {
+    font-size: 0.95em;
+    color: #233952;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* ── Responsive: stack on small screens ─────────────── */
+@media (max-width: 700px) {
+    .about-hero h2 {
+        font-size: 1.8em;
+    }
+
+    .team-grid {
+        padding: 40px 16px;
+    }
+}
