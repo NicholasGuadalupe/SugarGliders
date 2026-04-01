@@ -80,12 +80,14 @@ Matches the existing SugarGliders Studio design.
 
             <div class="team-card">
                 <div class="avatar">
-                    <img src="images/SugarGlidersLogo.png" alt="SugarGliders Logo" class="avatar-img">
+                    <img src="images/CarterHickerson.JPG" alt="Carter Hickerson Image" class="avatar-img">
                 </div>
                 <h3 class="member-name">Carter Hickerson</h3>
-                <p class="member-role">Something</p>
+                <p class="member-role">Director of Snacks</p>
                 <p class="member-bio">
-                    Something
+                    A Junior computer science student at Colorado State University. Loves Oreos, Fishing, and Puppies. 
+                    Oversees the strategic acquisition and distribution of snacks to ensure team morale and 
+                    productivity remain at peak levels
                 </p>
             </div>
 
