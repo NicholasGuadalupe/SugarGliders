@@ -220,10 +220,47 @@ nav a.active {
     margin: 0;
 }
 
+/* ── Color Coordinator page ─────────────────────────── */
+.color-page-intro {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background-color: #233952;
+    color: #F6F7EB;
+}
+
+.color-page-intro h2 {
+    font-size: 2.4em;
+    color: #59C9A5;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+
+.color-page-intro p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: #B9E3C6;
+    font-size: 1.05em;
+    line-height: 1.7;
+}
+
+.color-page-body {
+    padding: 50px 30px 60px;
+    background-color: #F6F7EB;
+    min-height: 200px;
+}
+
 /* ── Responsive: stack on small screens ─────────────── */
 @media (max-width: 700px) {
     .about-hero h2 {
         font-size: 1.8em;
+    }
+
+    .color-page-intro h2 {
+        font-size: 1.8em;
+    }
+
+    .color-page-body {
+        padding: 40px 16px 50px;
     }
 
     .team-grid {
