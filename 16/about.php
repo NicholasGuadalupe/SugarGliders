@@ -63,18 +63,19 @@ Matches the existing SugarGliders Studio design.
                 <h3 class="member-name">Cameron Will </h3>
                 <p class="member-role">Something</p>
                 <p class="member-bio">
-                   Something
+                    Something
                 </p>
             </div>
 
             <div class="team-card">
                 <div class="avatar">
-                    <img src="images/SugarGlidersLogo.png" alt="SugarGliders Logo" class="avatar-img">
+                    <img src="images/CameronHugg.jpg" alt="Cameron Hugg About Photo" class="avatar-img">
                 </div>
                 <h3 class="member-name">Cameron Hugg</h3>
-                <p class="member-role">Something</p>
+                <p class="member-role">Developer / Personality Hire</p>
                 <p class="member-bio">
-                    Something
+                    I am a junior at Colorado State University studying Computer Science, I'm here to utilize those mediocre programming skills
+                    to make build this website. In my free time I enjoy hiking, video games, movies, paddle boarding, and card games.
                 </p>
             </div>
 
