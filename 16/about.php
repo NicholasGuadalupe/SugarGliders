@@ -92,6 +92,18 @@ Matches the existing SugarGliders Studio design.
                 </p>
             </div>
 
+            <div class="team-card">
+                <div class="avatar">
+                    <img src="images/CameronWill.jpg" alt="Cameron Will Image" class="avatar-img">
+                </div>
+                <h3 class="member-name">Cameron Will n</h3>
+                <p class="member-role">Comedic Relief and Sofware Dev</p>
+                <p class="member-bio">
+                    A Junior computer science student at Colorado State University. Loves fishing, gaming and quiet walks on Colorado beaches. 
+                    Oversees all comedic elements of the team to improves team spirit and productivity. Also contributes to coding the project.
+                </p>
+            </div>
+
         </section>
 
     </main>
