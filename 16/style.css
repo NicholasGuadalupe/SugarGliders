@@ -1,9 +1,10 @@
 
+/* Contrast: #233952 on #F6F7EB = 10.92:1 (PASS AAA) */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #F6F7EB;
-    color: #233952;
+    color: #233952; 
 }
 
 h1, h2, h3 {
@@ -14,6 +15,7 @@ p {
     line-height: 1.6;
 }
 
+/* Contrast: #FFFFFF on #233952 = 11.81:1 (PASS AAA) */
 header {
     background-color: #233952;
     color: white;
@@ -41,20 +43,31 @@ nav ul li {
     margin-right: 20px;
 }
 
+/* Contrast: #B9E3C6 on #233952 = 8.36:1 (PASS AAA) */
 nav a {
-    color: #B9E3C6;
+    color: #B9E3C6; /* Celadon */
     text-decoration: none;
     font-weight: bold;
 }
 
+/* Contrast: #FFFD98 on #233952 = 11.11:1 (PASS AAA) */
 nav a:hover {
-    color: #FFFD98;
+    color: #FFFD98; /* Lime Cream */
 }
 
+/* Contrast: #FFFD98 on #233952 = 11.11:1 (PASS AAA) */
+nav a.active {
+    color: #FFFD98;
+    border-bottom: 2px solid #59C9A5;
+    padding-bottom: 2px;
+}
+
+/* Contrast: #233952 on #B9E3C6 = 8.36:1 (PASS AAA)
+   Contrast: #233952 on #F6F7EB = 10.92:1 (PASS AAA) */
 .hero {
     text-align: center;
     padding: 80px 20px;
-    background: linear-gradient(to right, #59C9A5, #B9E3C6);
+    background: linear-gradient(to right, #B9E3C6, #F6F7EB);
     color: #233952;
 }
 
@@ -68,9 +81,10 @@ nav a:hover {
     margin: 0 auto 25px auto;
 }
 
+/* Contrast: #FFFFFF on #5C415D = 8.86:1 (PASS AAA) */
 .cta-button {
     display: inline-block;
-    background-color: #D81E5B;
+    background-color: #5C415D; /* Vintage Grape */
     color: white;
     padding: 12px 25px;
     border-radius: 8px;
@@ -78,8 +92,10 @@ nav a:hover {
     font-weight: bold;
 }
 
+/* Contrast: #FFFD98 on #5C415D = 8.35:1 (PASS AAA) */
 .cta-button:hover {
-    background-color: #E94F37;
+    background-color: #5C415D;
+    color: #FFFD98;
 }
 
 .features {
@@ -91,6 +107,7 @@ nav a:hover {
     margin-bottom: 30px;
 }
 
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .feature-box {
     background-color: white;
     border: 2px solid #B9E3C6;
@@ -100,26 +117,22 @@ nav a:hover {
     max-width: 400px;
 }
 
+/* Contrast: #5C415D on #FFFFFF = 8.86:1 (PASS AAA) */
 .feature-box h3 {
-    color: #59C9A5;
+    color: #5C415D; /* Vintage Grape */
     margin-bottom: 10px;
 }
 
+/* Contrast: #F6F7EB on #5C415D = 8.20:1 (PASS AAA) */
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #5C415D;
+    background-color: #5C415D; /* Vintage Grape */
     color: #F6F7EB;
     margin-top: 40px;
 }
-/* About / Meet the Team page styles*/
-nav a.active {
-    color: #FFFD98;
-    border-bottom: 2px solid #59C9A5;
-    padding-bottom: 2px;
-}
 
-/* ── Group banner ────────────────────────────────────── */
+/* Contrast: #F6F7EB on #233952 = 10.92:1 (PASS AAA) */
 .about-group {
     text-align: center;
     padding: 60px 20px 40px;
@@ -127,13 +140,15 @@ nav a.active {
     color: #F6F7EB;
 }
 
+/* Contrast: #B9E3C6 on #233952 = 8.36:1 (PASS AAA) */
 .about-group h2 {
     font-size: 2.4em;
-    color: #59C9A5;
+    color: #B9E3C6;
     margin-bottom: 16px;
     letter-spacing: 0.5px;
 }
 
+/* Contrast: #B9E3C6 on #233952 = 8.36:1 (PASS AAA) */
 .about-group p {
     max-width: 620px;
     margin: 0 auto;
@@ -142,7 +157,6 @@ nav a.active {
     line-height: 1.7;
 }
 
-/* ── Team grid ──────────────────────────────────────── */
 .team-grid {
     display: flex;
     flex-wrap: wrap;
@@ -152,9 +166,9 @@ nav a.active {
     background-color: #F6F7EB;
 }
 
-/* ── Individual card ────────────────────────────────── */
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .team-card {
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     border: 2px solid #B9E3C6;
     border-radius: 14px;
     padding: 36px 28px 30px;
@@ -170,7 +184,6 @@ nav a.active {
     box-shadow: 0 10px 28px rgba(35, 57, 82, 0.18);
 }
 
-/* ── Avatar circle ──────────────────────────────────── */
 .avatar {
     width: 88px;
     height: 88px;
@@ -182,6 +195,7 @@ nav a.active {
     justify-content: center;
     margin: 0 auto 22px auto;
 }
+
 .avatar-img {
     width: 100%;
     height: 100%;
@@ -189,30 +203,31 @@ nav a.active {
     border-radius: 50%;
 }
 
+/* Contrast: #FFFD98 on #233952 = 11.11:1 (PASS AAA) */
 .avatar-icon {
     font-size: 2em;
     color: #FFFD98;
     line-height: 1;
 }
 
-/* ── Member name ────────────────────────────────────── */
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .member-name {
     font-size: 1.2em;
-    color: #D81E5B;
+    color: #233952;
     margin-bottom: 6px;
 }
 
-/* ── Role badge ─────────────────────────────────────── */
+/* Contrast: #5C415D on #FFFFFF = 8.86:1 (PASS AAA) */
 .member-role {
     font-size: 0.88em;
     font-weight: bold;
-    color: #59C9A5;
+    color: #5C415D;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-bottom: 14px;
 }
 
-/* ── Bio text ───────────────────────────────────────── */
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .member-bio {
     font-size: 0.95em;
     color: #233952;
@@ -220,7 +235,7 @@ nav a.active {
     margin: 0;
 }
 
-/* ── Color Coordinator page ─────────────────────────── */
+/* Contrast: #233952 on #F6F7EB = 10.92:1 (PASS AAA) */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -228,6 +243,7 @@ body {
     color: #233952;
 }
 
+/* Contrast: #FFFFFF on #233952 = 11.81:1 (PASS AAA) */
 header {
     background-color: #233952;
     color: white;
@@ -255,12 +271,14 @@ nav ul li {
     margin-right: 15px;
 }
 
+/* Contrast: #B9E3C6 on #233952 = 8.36:1 (PASS AAA) */
 nav a {
     color: #B9E3C6;
     text-decoration: none;
     font-weight: bold;
 }
 
+/* Contrast: #FFFD98 on #233952 = 11.11:1 (PASS AAA) */
 nav a:hover,
 nav a.active {
     color: #FFFD98;
@@ -275,7 +293,7 @@ nav a.active {
     padding: 20px;
 }
 
-/* centered white form box */
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .coordinate-form {
     background-color: white;
     border: 1px solid #233952;
@@ -289,6 +307,7 @@ nav a.active {
     margin-bottom: 15px;
 }
 
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .form-row label {
     display: block;
     margin-bottom: 5px;
@@ -296,42 +315,61 @@ nav a.active {
     text-align: center;
 }
 
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .form-row input {
     display: block;
     width: 120px;
     margin: 0 auto;
     padding: 6px;
     text-align: center;
+    color: #233952;
+    background-color: #FFFFFF;
+    border: 1px solid #5C415D;
 }
 
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .min-max-rule-form {
     display: block;
     margin-top: 6px;
     font-size: 0.9em;
     text-align: center;
+    color: #233952;
 }
 
+/* Contrast: #FFFFFF on #5C415D = 8.86:1 (PASS AAA) */
 .coord-submit {
     display: block;
     margin: 10px auto 0 auto;
     padding: 8px 14px;
     font-size: 1em;
     cursor: pointer;
+    background-color: #5C415D;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
 }
 
+/* Contrast: #FFFD98 on #5C415D = 8.35:1 (PASS AAA) */
+.coord-submit:hover {
+    color: #FFFD98;
+}
+
+/* Contrast: #5C415D on #F6F7EB = 8.20:1 (PASS AAA) */
 .form-error,
 .color-dup-msg {
     font-weight: bold;
     margin: 10px 0;
     text-align: center;
+    color: #5C415D;
 }
 
-
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .color-list-table {
     border-collapse: collapse;
     width: 70%;
     margin: 20px auto;
     background-color: white;
+    color: #233952;
 }
 
 .color-list-table td {
@@ -351,6 +389,9 @@ nav a.active {
 .select-color-dropdown {
     width: 90%;
     padding: 5px;
+    color: #233952;
+    background-color: #FFFFFF;
+    border: 1px solid #5C415D;
 }
 
 .color-swatch {
@@ -360,19 +401,20 @@ nav a.active {
     border: 1px solid #233952;
 }
 
-/* bottom grid table */
 .coord-grid-wrap {
     overflow-x: auto;
     margin-top: 20px;
 }
 
+/* Contrast: #233952 on #FFFFFF = 11.81:1 (PASS AAA) */
 .coord-grid-table {
     border-collapse: collapse;
     border-spacing: 0;
     margin: 0 auto;
+    background-color: #FFFFFF;
+    color: #233952;
 }
 
-/* only the grid cells should be square */
 .coord-grid-table td,
 .coord-grid-table th {
     border: 1px solid #233952;
@@ -386,6 +428,7 @@ nav a.active {
     box-sizing: border-box;
 }
 
+/* Contrast: #F6F7EB on #5C415D = 8.20:1 (PASS AAA) */
 footer {
     text-align: center;
     padding: 15px;
@@ -394,7 +437,6 @@ footer {
     margin-top: 30px;
 }
 
-/* responsive */
 @media (max-width: 700px) {
     .color-page-intro h2 {
         font-size: 1.8em;
@@ -405,9 +447,8 @@ footer {
     }
 }
 
-/* ── Responsive: stack on small screens ─────────────── */
 @media (max-width: 700px) {
-    .about-hero h2 {
+    .about-group h2 {
         font-size: 1.8em;
     }
 
