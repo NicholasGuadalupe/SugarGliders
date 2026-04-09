@@ -275,9 +275,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </script>
 
             <?php endif; ?>
-
+            
+            
+            <form method="POST" action="print.php" id="printForm">
+            <input type="hidden" name="gridSize" value="<?php echo $grid_n; ?>">
+            <input type="hidden" name="numColors" value="<?php echo $num_colors; ?>">
+        
+            <?php for ($i = 0; $i < $num_colors; $i++): ?>
+            <input type="hidden" name="colors[]" id="hiddenColor<?php echo $i; ?>" 
+                value="<?php echo htmlspecialchars($PALETTE[$i], ENT_QUOTES, 'UTF-8'); ?>">
+            <?php endfor; ?>
+        
+            <button type="submit" class="coord-submit">Print View</button>
+            </form>
         </section>
-
+                        
     </main>
 
     <footer>
