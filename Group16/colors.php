@@ -4,9 +4,9 @@ require "db.php";
 $message = "";
 $error = "";
 
-/* -----------------------------
-   ADD COLOR
------------------------------ */
+
+// ADD COLOR
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_color"])) {
     $name = trim($_POST["name"]);
     $hex = strtoupper(trim($_POST["hex"]));
@@ -14,22 +14,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_color"])) {
     if (!preg_match("/^#[0-9A-F]{6}$/", $hex)) {
         $error = "Hex value must be in the format #RRGGBB.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO colors (name, hex_value) VALUES (?, ?)");
-        $stmt->bind_param("ss", $name, $hex);
+        // Check for duplicates
+        $check = $conn->prepare("SELECT id FROM colors WHERE LOWER(name) = LOWER(?) OR hex_value = ?");
+        $check->bind_param("ss", $name, $hex);
+        $check->execute();
+        $checkResult = $check->get_result();
 
-        if ($stmt->execute()) {
-            $message = "Color added successfully.";
+        if ($checkResult->num_rows > 0) {
+            $error = "That color name or hex value already exists.";
         } else {
-            $error = "Color name or hex value already exists.";
+            $stmt = $conn->prepare("INSERT INTO colors (name, hex_value) VALUES (?, ?)");
+            $stmt->bind_param("ss", $name, $hex);
+
+            if ($stmt->execute()) {
+                $message = "Color added successfully.";
+            } else {
+                $error = "Could not add color.";
+            }
+
+            $stmt->close();
         }
 
-        $stmt->close();
+        $check->close();
     }
 }
 
-/* -----------------------------
-   EDIT COLOR
------------------------------ */
+
+// EDIT COLOR
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["edit_color"])) {
     $id = intval($_POST["edit_id"]);
     $name = trim($_POST["edit_name"]);
@@ -44,16 +56,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["edit_color"])) {
         if ($stmt->execute()) {
             $message = "Color updated successfully.";
         } else {
-            $error = "Color name or hex value already exists.";
+            $error = "That color name or hex value already exists.";
         }
 
         $stmt->close();
     }
 }
 
-/* -----------------------------
-   DELETE CONFIRMATION STEP
------------------------------ */
+
+// DELETE CONFIRMATION STEP
+
 $deleteCandidate = null;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["request_delete"])) {
@@ -63,8 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["request_delete"])) {
     $countRow = $countResult->fetch_assoc();
     $totalColors = intval($countRow["total"]);
 
-    if ($totalColors <= 2) {
-        $error = "You cannot delete a color because the database must contain at least 2 colors.";
+    if ($totalColors < 2) {
+        $error = "You cannot delete a color when the databse has less than 2 colors.";
     } else {
         $stmt = $conn->prepare("SELECT * FROM colors WHERE id = ?");
         $stmt->bind_param("i", $delete_id);
@@ -77,9 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["request_delete"])) {
     }
 }
 
-/* -----------------------------
-   FINAL DELETE
------------------------------ */
+
+//DELETE
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["confirm_delete"])) {
     $delete_id = intval($_POST["delete_id"]);
 
@@ -87,8 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["confirm_delete"])) {
     $countRow = $countResult->fetch_assoc();
     $totalColors = intval($countRow["total"]);
 
-    if ($totalColors <= 2) {
-        $error = "You cannot delete a color because the database must contain at least 2 colors.";
+    if ($totalColors < 2) {
+        $error = "You cannot delete a color when the databse has less than 2 colors.";
     } else {
         $stmt = $conn->prepare("DELETE FROM colors WHERE id = ?");
         $stmt->bind_param("i", $delete_id);
@@ -103,9 +115,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["confirm_delete"])) {
     }
 }
 
-/* -----------------------------
-   GET COLORS FOR DISPLAY
------------------------------ */
+
+// GET COLORS FOR DISPLAY
+
 $result = $conn->query("SELECT * FROM colors ORDER BY name");
 $colors = [];
 
@@ -137,14 +149,6 @@ while ($row = $result->fetch_assoc()) {
 
 <main>
 
-    <?php if ($message !== ""): ?>
-        <p class="success-message"><?php echo htmlspecialchars($message); ?></p>
-    <?php endif; ?>
-
-    <?php if ($error !== ""): ?>
-        <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
-    <?php endif; ?>
-
     <section>
         <h2>Current Colors</h2>
 
@@ -169,6 +173,18 @@ while ($row = $result->fetch_assoc()) {
 
     <section>
         <h2>Add a Color</h2>
+
+        <?php if ($message !== ""): ?>
+            <div class="form-message error-message">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($error !== ""): ?>
+        <div class="form-message error-message">
+            <?php echo htmlspecialchars($error); ?>
+        </div>
+<?php endif; ?>
 
         <form method="post" action="colors.php">
             <label>
@@ -253,7 +269,7 @@ while ($row = $result->fetch_assoc()) {
 </main>
 
 <footer>
-    <p>&copy; 2026 Director of Snacks</p>
+    <p>&copy; 2026 SugarGliders CAS312 Group Projec</p>
 </footer>
 
 </body>
