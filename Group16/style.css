@@ -464,3 +464,32 @@ footer {
         padding: 40px 16px;
     }
 }
+
+/* Colors page */
+.form-message {
+    display: block;
+    width: fit-content;
+    min-width: 300px;
+    max-width: 600px;
+    padding: 14px 18px;
+    margin: 10px 0 14px 0;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ERROR */
+.error-message {
+    background-color: #ffd7d7;
+    color: #7a0000;
+    border: 3px solid #7a0000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* SUCCESS */
+.success-message {
+    background-color: #d7ffd7;
+    color: #145214;
+    border: 3px solid #145214;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
