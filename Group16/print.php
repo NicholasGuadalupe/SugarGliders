@@ -1,7 +1,13 @@
 <?php
 $gridSize = isset($_POST['gridSize']) ? (int)$_POST['gridSize'] : 0;
 $numColors = isset($_POST['numColors']) ? (int)$_POST['numColors'] : 0;
-$colors = isset($_POST['colors']) ? $_POST['colors'] : [];
+$colorNames = isset($_POST['colorNames']) ? (array)$_POST['colorNames'] : [];
+$colorHex = isset($_POST['colorHex']) ? (array)$_POST['colorHex'] : [];
+$coords = isset($_POST['coords']) ? (array)$_POST['coords'] : [];
+
+/* checks that values are within allowed range just incase */
+if ($gridSize < 1)  { $gridSize = 1;  }
+if ($gridSize > 26) { $gridSize = 26; }
 ?>
 <!DOCTYPE html>
 <html lang="en">
