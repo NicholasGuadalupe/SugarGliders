@@ -32,7 +32,7 @@ $err_grid = '';
 $err_colors = '';
 $valid = false;
 
-// input ofr frid size and cum colors
+// input for grid size and num colors
 $grid_input = '';
 $colors_input = '';
 
@@ -43,10 +43,8 @@ $num_colors = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $grid_input = isset($_POST['grid_size']) ? trim($_POST['grid_size']) : '';
-
     $colors_input = isset($_POST['num_colors']) ? trim($_POST['num_colors']) : '';
 
-    
     $grid_n = filter_var($grid_input, FILTER_VALIDATE_INT);
 
     if ($grid_n === false || $grid_n < 1 || $grid_n > 26) {
@@ -71,6 +69,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Color Coordinator - SugarGliders</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Coordinate column in the top table */
+        .color-list-table .coord-cell {
+            width: 40%;
+            font-size: 0.9em;
+            color: #233952;
+            text-align: left;
+            padding-left: 10px;
+        }
+        /* Radio button cell */
+        .color-list-table .radio-cell {
+            width: 5%;
+            text-align: center;
+        }
+        /* Make grid cells clickable */
+        .coord-grid-table td.paintable {
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+        .coord-grid-table td.paintable:hover {
+            opacity: 0.85;
+        }
+        /* Duplicate color message */
+        .duplicate-color-msg {
+            color: #5C415D;
+            font-weight: bold;
+            text-align: center;
+            margin: 8px 0;
+            display: none;
+        }
+        /* Print form sits below the grid */
+        .print-form-wrap {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -85,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="color.php" class="active">Color Coordinator</a></li>
+                <li><a href="colors.php">Color Selection</a></li>
             </ul>
         </nav>
     </header>
@@ -128,11 +163,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span class="min-max-rule-form">Enter one number from 1 to 10.</span>
                 </div>
 
-
                 <button type="submit" class="coord-submit">Generate</button>
             </form>
 
-            <!-- errors -->
             <?php if ($err_grid !== '') : ?>
                 <p class="form-error"><?php echo htmlspecialchars($err_grid, ENT_QUOTES, 'UTF-8'); ?></p>
             <?php endif; ?>
@@ -143,32 +176,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php if ($valid) : ?>
 
-                <p id="duplicate-color-msg" class="duplicate-color-msg" hidden></p>
+                <p id="duplicate-color-msg" class="duplicate-color-msg"></p>
 
-        
-                <table class="color-list-table">
-
+                <table class="color-list-table" id="colorListTable">
                     <?php
                     for ($i = 0; $i < $num_colors; $i++) :
-
                         $selected = $PALETTE[$i];
                         $hex = $PALETTE_HEX[$selected];
                     ?>
-                        <tr>
+                        <tr data-row="<?php echo $i; ?>">
 
-                            <!-- dropdown -->
-                            <td class="color-list-select-cell">
-                                <input 
-                                    type="radio" 
-                                    name="active_color_row" 
+                            <td class="radio-cell">
+                                <input
+                                    type="radio"
+                                    name="active_color"
+                                    class="color-radio"
                                     value="<?php echo $i; ?>"
                                     <?php if ($i === 0) echo 'checked'; ?>
                                 >
-                                <select 
-                                    id="color_sel_<?php echo $i; ?>" 
-                                    class="select-color-dropdown"
-                                    data-row="<?php echo $i; ?>"
-                                >
+                            </td>
+
+                            <td class="color-list-select-cell">
+                                <select id="color_sel_<?php echo $i; ?>" class="select-color-dropdown" data-row="<?php echo $i; ?>">
                                     <?php
                                     foreach ($PALETTE as $color) :
                                     ?>
@@ -182,23 +211,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </select>
                             </td>
 
-                            <!-- color preview -->
                             <td class="color-list-preview-cell">
                                 <span
                                     class="color-swatch"
                                     style="background-color: <?php echo htmlspecialchars($hex, ENT_QUOTES, 'UTF-8'); ?>;"
                                 ></span>
                             </td>
-                            <td class="coordinate-output" id="coords_<?php echo $i; ?>"></td>
+
+                            <td class="coord-cell" id="coords_<?php echo $i; ?>"></td>
                         </tr>
                     <?php endfor; ?>
                 </table>
 
                 <div class="coord-grid-wrap">
-
-                    <!-- coordinate grid -->
-                    <table class="coord-grid-table">
-
+                    <table class="coord-grid-table" id="coordGrid">
                         <?php
                         for ($r = 0; $r <= $grid_n; $r++) :
                         ?>
@@ -206,176 +232,196 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php
                                 for ($c = 0; $c <= $grid_n; $c++) :
                                 ?>
-
-                                    <?php
-                                    if ($r === 0 && $c === 0) :
-                                    ?>
+                                    <?php if ($r === 0 && $c === 0) : ?>
                                         <td></td>
 
-                                    <?php
+                                    <?php elseif ($r === 0) : ?>
+                                        <th><?php echo htmlspecialchars(chr(ord('A') + $c - 1), ENT_QUOTES, 'UTF-8'); ?></th>
 
-                                    elseif ($r === 0) :
-                                    ?>
-                                        <th>
-                                            <?php echo htmlspecialchars(chr(ord('A') + $c - 1), ENT_QUOTES, 'UTF-8'); ?>
-                                        </th>
-
-                                    <?php
-
-                                    elseif ($c === 0) :
-                                    ?>
+                                    <?php elseif ($c === 0) : ?>
                                         <th><?php echo $r; ?></th>
 
-                                    <?php
-
-                                    else :
-                                        $coord = chr(ord('A') + $c - 1) . $r;
-                                    ?>
-                                        <td 
-                                            class="paint-cell"
-                                            data-coord="<?php echo htmlspecialchars($coord, ENT_QUOTES, 'UTF-8'); ?>"
+                                    <?php else : ?>
+                                        <td class="paintable"
+                                            data-col="<?php echo chr(ord('A') + $c - 1); ?>"
+                                            data-row="<?php echo $r; ?>"
                                         ></td>
                                     <?php endif; ?>
-
                                 <?php endfor; ?>
                             </tr>
                         <?php endfor; ?>
-
                     </table>
                 </div>
 
-                <!-- duplicate color checking -->
+                <div class="print-form-wrap">
+                    <form method="POST" action="print.php" id="printForm">
+                        <input type="hidden" name="gridSize" value="<?php echo $grid_n; ?>">
+                        <input type="hidden" name="numColors" value="<?php echo $num_colors; ?>">
+                        <div id="printHiddenFields"></div>
+                        <button type="submit" class="coord-submit" onclick="preparePrintData()">Print View</button>
+                    </form>
+                </div>
+
                 <script>
-                        var selects = document.querySelectorAll('.select-color-dropdown');
-                        var cells = document.querySelectorAll('.paint-cell');
-                        var msg = document.getElementById('duplicate-color-msg');
-                        var colorHex = <?php echo json_encode($PALETTE_HEX); ?>;
+                (function () {
+                    var NUM_ROWS  = <?php echo $grid_n; ?>;
+                    var NUM_COLORS = <?php echo $num_colors; ?>;
+                    var colorHex = <?php echo json_encode($PALETTE_HEX); ?>;
 
-                        var paintedCells = {};
+                    // painted[rowIndex] = Set of coordinate strings (e.g. "A1")
+                    var painted = [];
+                    for (var i = 0; i < NUM_COLORS; i++) painted.push({});
 
-                        for (var i = 0; i < selects.length; i++) {
-                            selects[i].dataset.oldValue = selects[i].value;
+                    var selects  = document.querySelectorAll('.select-color-dropdown');
+                    var radios   = document.querySelectorAll('.color-radio');
+                    var msg      = document.getElementById('duplicate-color-msg');
+                    var grid     = document.getElementById('coordGrid');
+
+                    function getActiveRow() {
+                        for (var i = 0; i < radios.length; i++) {
+                            if (radios[i].checked) return parseInt(radios[i].value);
                         }
+                        return 0;
+                    }
 
-                        function getActiveRow() {
-                            return document.querySelector('input[name="active_color_row"]:checked').value;
-                        }
+                    function getColorForRow(i) {
+                        return selects[i].value;
+                    }
 
-                        function getSelectedColor(row) {
-                            return document.querySelector('.select-color-dropdown[data-row="' + row + '"]').value;
-                        }
+                    function sortCoords(coords) {
+                        var arr = Object.keys(coords);
+                        arr.sort(function (a, b) {
+                            var aLetter = a.charAt(0), aNum = parseInt(a.slice(1));
+                            var bLetter = b.charAt(0), bNum = parseInt(b.slice(1));
+                            if (aLetter < bLetter) return -1;
+                            if (aLetter > bLetter) return 1;
+                            return aNum - bNum;
+                        });
+                        return arr;
+                    }
 
-                        function sortCoords(coords) {
-                            return coords.sort(function(a, b) {
-                                var letterA = a.charAt(0);
-                                var letterB = b.charAt(0);
-                                var numberA = parseInt(a.substring(1));
-                                var numberB = parseInt(b.substring(1));
+                    function updateCoordDisplay(rowIdx) {
+                        var cell = document.getElementById('coords_' + rowIdx);
+                        if (!cell) return;
+                        var sorted = sortCoords(painted[rowIdx]);
+                        cell.textContent = sorted.join(', ');
+                    }
 
-                                if (letterA === letterB) {
-                                    return numberA - numberB;
+                    function updateSwatch(rowIdx) {
+                        var row = selects[rowIdx].parentNode.parentNode;
+                        var swatch = row.querySelector('.color-swatch');
+                        if (swatch) swatch.style.backgroundColor = colorHex[selects[rowIdx].value];
+                    }
+
+                    function repaintGrid() {
+                        var cells = grid.querySelectorAll('td.paintable');
+                        for (var ci = 0; ci < cells.length; ci++) {
+                            var coord = cells[ci].dataset.col + cells[ci].dataset.row;
+                            var foundColor = null;
+                            for (var ri = 0; ri < NUM_COLORS; ri++) {
+                                if (painted[ri][coord]) {
+                                    foundColor = colorHex[getColorForRow(ri)];
+                                    break;
                                 }
-
-                                return letterA.localeCompare(letterB);
-                            });
-                        }
-
-                        function updateCoordinateOutputs() {
-                            for (var i = 0; i < selects.length; i++) {
-                                document.getElementById('coords_' + i).textContent = '';
                             }
-
-                            var coordsByRow = {};
-
-                            for (var coord in paintedCells) {
-                                var row = paintedCells[coord];
-
-                                if (!coordsByRow[row]) {
-                                    coordsByRow[row] = [];
-                                }
-
-                                coordsByRow[row].push(coord);
-                            }
-
-                            for (var row in coordsByRow) {
-                                var sorted = sortCoords(coordsByRow[row]);
-                                document.getElementById('coords_' + row).textContent = sorted.join(', ');
-                            }
+                            cells[ci].style.backgroundColor = foundColor ? foundColor : '';
                         }
+                    }
 
-                        for (var i = 0; i < cells.length; i++) {
-                            cells[i].onclick = function() {
-                                var activeRow = getActiveRow();
-                                var selectedColor = getSelectedColor(activeRow);
-                                var coord = this.dataset.coord;
+                    for (var i = 0; i < selects.length; i++) {
+                        selects[i].dataset.oldValue = selects[i].value;
+                    }
 
-                                this.style.backgroundColor = colorHex[selectedColor];
-                                paintedCells[coord] = activeRow;
+                    for (var i = 0; i < selects.length; i++) {
+                        (function (idx) {
+                            selects[idx].onchange = function () {
+                                var newVal = this.value;
+                                var oldVal = this.dataset.oldValue;
 
-                                updateCoordinateOutputs();
-                            };
-                        }
-
-                        for (var i = 0; i < selects.length; i++) {
-                            selects[i].onchange = function () {
-                                var currentRow = this.dataset.row;
-                                var oldColor = this.dataset.oldValue;
-                                var newColor = this.value;
-
+                                // Check for duplicate
                                 var duplicate = false;
-
                                 for (var j = 0; j < selects.length; j++) {
-                                    if (selects[j] !== this && selects[j].value === newColor) {
+                                    if (selects[j] !== this && selects[j].value === newVal) {
                                         duplicate = true;
+                                        break;
                                     }
                                 }
 
                                 if (duplicate) {
-                                    this.value = oldColor;
+                                    this.value = oldVal;
                                     msg.textContent = 'That color is already in use. Each row must use a different color.';
-                                    msg.hidden = false;
+                                    msg.style.display = 'block';
                                     return;
                                 }
 
-                                msg.hidden = true;
+                                msg.style.display = 'none';
+                                this.dataset.oldValue = newVal;
 
-                                var row = this.parentNode.parentNode;
-                                var swatch = row.querySelector('.color-swatch');
 
-                                if (swatch) {
-                                    swatch.style.backgroundColor = colorHex[newColor];
-                                }
-
-                                for (var coord in paintedCells) {
-                                    if (paintedCells[coord] === currentRow) {
-                                        var cell = document.querySelector('.paint-cell[data-coord="' + coord + '"]');
-                                        if (cell) {
-                                            cell.style.backgroundColor = colorHex[newColor];
-                                        }
-                                    }
-                                }
-
-                                this.dataset.oldValue = newColor;
+                                updateSwatch(idx);
+                                repaintGrid();
                             };
-                        }
-                    </script>
-            <form method="POST" action="print.php" id="printForm">
-            
-            
+                        })(i);
+                    }
 
-            <input type="hidden" name="gridSize" value="<?php echo $grid_n; ?>">
-            <input type="hidden" name="numColors" value="<?php echo $num_colors; ?>">
-        
-            <?php for ($i = 0; $i < $num_colors; $i++): ?>
-            <input type="hidden" name="colors[]" id="hiddenColor<?php echo $i; ?>" 
-                value="<?php echo htmlspecialchars($PALETTE[$i], ENT_QUOTES, 'UTF-8'); ?>">
-            <?php endfor; ?>
-        
-            <button type="submit" class="coord-submit">Print View</button>
-            </form>
+                    var paintableCells = grid.querySelectorAll('td.paintable');
+                    for (var ci = 0; ci < paintableCells.length; ci++) {
+                        paintableCells[ci].addEventListener('click', function () {
+                            var col   = this.dataset.col;
+                            var row   = this.dataset.row;
+                            var coord = col + row;
+                            var activeRow = getActiveRow();
+
+                            for (var ri = 0; ri < NUM_COLORS; ri++) {
+                                if (ri !== activeRow) {
+                                    delete painted[ri][coord];
+                                    updateCoordDisplay(ri);
+                                }
+                            }
+
+                            painted[activeRow][coord] = true;
+                            updateCoordDisplay(activeRow);
+
+                            this.style.backgroundColor = colorHex[getColorForRow(activeRow)];
+                        });
+                    }
+
+                    window.preparePrintData = function () {
+                        var container = document.getElementById('printHiddenFields');
+                        container.innerHTML = '';
+
+                        for (var i = 0; i < NUM_COLORS; i++) {
+                            var colorName = getColorForRow(i);
+                            var hex       = colorHex[colorName];
+                            var coordStr  = sortCoords(painted[i]).join(', ');
+
+                            var nameInput  = document.createElement('input');
+                            nameInput.type  = 'hidden';
+                            nameInput.name  = 'colorNames[]';
+                            nameInput.value = colorName;
+                            container.appendChild(nameInput);
+
+                            var hexInput  = document.createElement('input');
+                            hexInput.type  = 'hidden';
+                            hexInput.name  = 'colorHexes[]';
+                            hexInput.value = hex;
+                            container.appendChild(hexInput);
+
+                            var coordInput  = document.createElement('input');
+                            coordInput.type  = 'hidden';
+                            coordInput.name  = 'colorCoords[]';
+                            coordInput.value = coordStr;
+                            container.appendChild(coordInput);
+                        }
+                    };
+
+                })();
+                </script>
+
             <?php endif; ?>
+
         </section>
-                        
+
     </main>
 
     <footer>
