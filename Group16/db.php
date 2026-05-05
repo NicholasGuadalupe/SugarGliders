@@ -57,7 +57,7 @@ INSERT INTO colors (name, hex_value) VALUES
 
 $host = "helmi";
 $user = "carter64";
-$password = "iminhillbillyhell";
+$password = "insiertpsswdhere";
 $database = "carter64";
 
 $conn = new mysqli($host, $user, $password, $database);
